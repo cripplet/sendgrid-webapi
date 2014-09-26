@@ -2,6 +2,8 @@ import requests
 
 # cf. https://sendgrid.com/docs/API_Reference/Web_API/index.html
 
+SENDGRID_ENDPOINT = 'https://api.sendgrid.com/api'
+
 class SendGridWebAPIClient(object):
 	def __init__(self, username, password):
 		self.username = username
@@ -9,9 +11,9 @@ class SendGridWebAPIClient(object):
 
 	def _execute_req(self, module, action, format, method, data):
 		if(module != 'credentials'):
-			url = 'https://api.sendgrid.com/api/%s.%s.%s' % (module, action, format)
+			url = '%s/%s.%s.%s' % (SENDGRID_ENDPOINT, module, action, format)
 		else:
-			url = 'https://api.sendgrid.com/api/%s/%s.%s' % (module, action, format)
+			url = '%s/%s/%s.%s' % (SENDGRID_ENDPOINT, module, action, format)
 		data['api_user'] = self.username
 		data['api_key'] = self.password
 		if(method == 'GET'):
